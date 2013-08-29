@@ -15,11 +15,14 @@ def adr2geo(adr):
     return (float(lat), float(lng))
 
 def get_distance(start, goal):
+    # pyprojを使って距離を求める
+    #res = u'%(from)s から %(to)s まで %(distance_str)s'
     q = Geod(ellps='WGS84')
     fa, ba, d = q.inv(start[1],start[0],goal[1],goal[0])
     return d
 
 def cutdown(num):
+    # 距離に単位をつけて返す
     val = int(round(num))
     if val < 1000:
         return '%sm' % val
@@ -37,8 +40,10 @@ if __name__ == '__main__':
 
     fadr = args[0].decode('utf-8')
     fgeo = adr2geo(fadr)
+    # print fgeo
     tadr = args[1].decode('utf-8')
     tgeo = adr2geo(tadr)
+    # print tgeo
 
     distance = get_distance(fgeo,tgeo)
     dist_str = cutdown(distance)
